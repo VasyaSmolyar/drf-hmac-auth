@@ -1,0 +1,4 @@
+site_name: drf-hmac-auth
+site_description: A HMAC-token authentication's package
+repo_url: https://github.com/VasyaSmolyar/drf-hmac-auth
+site_dir: html
