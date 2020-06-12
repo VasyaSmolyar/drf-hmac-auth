@@ -6,7 +6,7 @@ from django.conf import settings
 
 HMAC_LOGIN_HEADER = getattr(settings, 'HMAC_LOGIN_HEADER', 'HMAC-Login')
 HMAC_TOKEN_HEADER = getattr(settings, 'HMAC_TOKEN_HEADER', 'HMAC-Token')
-HMAC_TIMES_HEADER = getattr(settings, 'HMAC_TOKEN_HEADER', 'HMAC-Times') 
+HMAC_TIMES_HEADER = getattr(settings, 'HMAC_TIMES_HEADER', 'HMAC-Times') 
 HMAC_LOGIN_FIELD = getattr(settings, 'HMAC_LOGIN_FIELD', 'username') 
 HMAC_PERIOD = getattr(settings, 'HMAC_PERIOD', TokenPeriod.day)
 HMAC_HASH_FUNC = getattr(settings, 'HMAC_HASH_FUNC', 'md5')
@@ -17,7 +17,7 @@ class TokenPermission(BasePermission):
     message = 'Wrong or expired temporary token'
 
     def has_permission(self, request, view):
-        if 'HMAC-Login' not in request.headers or 'HMAC-Times' not in request.headers or 'HMAC-Token' not in request.headers:
+        if HMAC_TIMES_HEADER not in request.headers or HMAC_TIMES_HEADER not in request.headers or HMAC_TOKEN_HEADER not in request.headers:
             return False
         token = request.headers[HMAC_TOKEN_HEADER]
         login = request.headers[HMAC_LOGIN_HEADER]
@@ -33,7 +33,7 @@ class TokenPermission(BasePermission):
         return crypt.checkToken(login, times, token)
 
     def has_object_permission(self, request, view, user):
-        if 'HMAC-Login' not in request.headers or 'HMAC-Times' not in request.headers or 'HMAC-Token' not in request.headers:
+        if HMAC_TIMES_HEADER not in request.headers or HMAC_TIMES_HEADER not in request.headers or HMAC_TOKEN_HEADER not in request.headers:
             return False
         token = request.headers[HMAC_TOKEN_HEADER]
         login = request.headers[HMAC_LOGIN_HEADER]

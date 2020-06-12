@@ -76,7 +76,7 @@ setup(
     package_data=get_package_data(package),
     install_requires=[],
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 3 - Alpha',
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
