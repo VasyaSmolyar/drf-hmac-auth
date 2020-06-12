@@ -27,6 +27,7 @@ class TokenSerializer(serializers.BaseSerializer):
             raise serializers.ValidationError({"error" : "User is missing"})
         HMAC_PERIOD = getattr(settings, 'HMAC_PERIOD', TokenPeriod.day)
         HMAC_HASH_FUNC = getattr(settings, 'HMAC_HASH_FUNC', 'md5')
+        HMAC_LOGIN_FIELD = getattr(settings, 'HMAC_LOGIN_FIELD', 'username') 
         output = {}
         user = data['user']
         tokens = Token.objects.filter(user=user).all()
@@ -37,7 +38,7 @@ class TokenSerializer(serializers.BaseSerializer):
             token = obj.token
         else:
             token = tokens[0].token
-        login = user.username
+        login = getattr(user, HMAC_LOGIN_FIELD)
         crypt = HmacToken(token, HMAC_PERIOD, HMAC_HASH_FUNC)
         times, temp_token = crypt.getToken(login)
         self.login = login

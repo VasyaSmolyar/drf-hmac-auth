@@ -7,6 +7,7 @@ from django.conf import settings
 HMAC_LOGIN_HEADER = getattr(settings, 'HMAC_LOGIN_HEADER', 'HMAC-Login')
 HMAC_TOKEN_HEADER = getattr(settings, 'HMAC_TOKEN_HEADER', 'HMAC-Token')
 HMAC_TIMES_HEADER = getattr(settings, 'HMAC_TOKEN_HEADER', 'HMAC-Times') 
+HMAC_LOGIN_FIELD = getattr(settings, 'HMAC_LOGIN_FIELD', 'username') 
 HMAC_PERIOD = getattr(settings, 'HMAC_PERIOD', TokenPeriod.day)
 HMAC_HASH_FUNC = getattr(settings, 'HMAC_HASH_FUNC', 'md5')
 
@@ -21,7 +22,8 @@ class TokenPermission(BasePermission):
         token = request.headers[HMAC_TOKEN_HEADER]
         login = request.headers[HMAC_LOGIN_HEADER]
         times = request.headers[HMAC_TIMES_HEADER]
-        users = User.objects.filter(username=login).all()
+        kw = {HMAC_LOGIN_FIELD: login}
+        users = User.objects.filter(**kw).all()
         if len(users) == 0:
             return False
         tokens = Token.objects.filter(user=users[0]).all() 

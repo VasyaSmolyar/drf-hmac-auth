@@ -34,6 +34,8 @@ Move to project folder and add 'hmac_auth' into INSTALLED_APPS in settings.py
         ...
     ]
 
+    settings.AUTH_USER_MODEL = CustomUser # add it if you use custom user model (insert your model name) 
+
 Make and run migrations
 
 .. code:: bash
@@ -41,7 +43,7 @@ Make and run migrations
     $ python manage.py makemigrations hmac_auth
     $ python manage.py migrate
 
-Set names of HTTP headers, a hash function's name (from hashlib.algorithms_available) and time of token's living in settings.py or leave it for this default values:
+Set names of HTTP headers, a hash function's name (from hashlib.algorithms_available), a field of user's model for login and time of token's living in settings.py or leave it for this default values:
 
 .. code:: python
 
@@ -50,6 +52,7 @@ Set names of HTTP headers, a hash function's name (from hashlib.algorithms_avail
     HMAC_LOGIN_HEADER = 'HMAC-Login'
     HMAC_TOKEN_HEADER = 'HMAC-Token' 
     HMAC_TIMES_HEADER = 'HMAC-Times' 
+    HMAC_LOGIN_FIELD = 'username'
     HMAC_HASH_FUNC = 'md5'
     HMAC_PERIOD = TokenPeriod.day # TokenPeriod.minute, hour, day, week, month, year also avaiable
     # You can also change a period like 'TokenPeriod.hour * 2.'
