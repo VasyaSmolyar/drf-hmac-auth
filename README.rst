@@ -6,7 +6,7 @@ drf-hmac-auth
 Overview
 --------
 
-An HMAC-token authentication's package. No need refresh token manually by a timer, with HMAC-algorithm user cannot change a timestamp from the server. And the server can check this timestamp from the client for an expiring.
+An HMAC-token authentication's package for Django REST. No need refresh token manually by a timer, with HMAC-algorithm user cannot change a timestamp from the server. And the server can check this timestamp from the client for an expiring.
 
 Requirements
 ------------
